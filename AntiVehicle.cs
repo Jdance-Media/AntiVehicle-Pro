@@ -65,6 +65,7 @@ namespace AntiVehiclePro
         private void VehicleManager_onEnterVehicleRequested(Player player, InteractableVehicle vehicle, ref bool shouldAllow)
         {
             UnturnedPlayer unturnedPlayer = UnturnedPlayer.FromPlayer(player);
+            Logger.Log($"{unturnedPlayer.DisplayName}({unturnedPlayer.CSteamID}) is attempting to enter a vehicle with an ID of {vehicle.id}");
             var blacklist = Configuration.Instance.Blacklisted.FirstOrDefault(x => x.VehicleId == vehicle.id);
             var banned = Configuration.Instance.VehicleBanned.FirstOrDefault(x => x.Player == unturnedPlayer.SteamProfile.SteamID64);
             if (banned != null)
@@ -91,6 +92,7 @@ namespace AntiVehiclePro
             {
                 UnturnedPlayer criminal = UnturnedPlayer.FromCSteamID(instigatorSteamID);
                 UnturnedPlayer owner = UnturnedPlayer.FromCSteamID(vehicle.lockedOwner);
+                Logger.Log($"{criminal.DisplayName}({criminal.CSteamID}) is attempting to pop a tire on {owner.DisplayName}'s vehicle!");
                 if (Configuration.Instance.ShouldWarnCriminal == true)
                 {
                     UnturnedChat.Say(criminal, $"{Configuration.Instance.ShouldWarnCriminalMessage}");
