@@ -20,6 +20,21 @@ namespace AntiVehiclePro
             VehicleManager.onDamageTireRequested += VehicleManager_onDamageTireRequested;
             VehicleManager.onEnterVehicleRequested += VehicleManager_onEnterVehicleRequested;
             VehicleManager.onDamageVehicleRequested += VehicleManager_onDamageVehicleRequested;
+            VehicleManager.onVehicleLockpicked += VehicleManager_onVehicleLockpicked;
+        }
+
+        private void VehicleManager_onVehicleLockpicked(InteractableVehicle vehicle, Player instigatingPlayer, ref bool allow)
+        {
+            UnturnedPlayer sameplayer = UnturnedPlayer.FromPlayer(instigatingPlayer);
+            Logger.Log($"{sameplayer.DisplayName}({sameplayer.CSteamID}) has attempted to lockpick a vehicle!");
+            if (Configuration.Instance.ShouldAllowLockpick == false)
+            {
+                allow = false;
+            }
+            if (Configuration.Instance.ShouldWarnCriminal)
+            {
+                UnturnedChat.Say(sameplayer, $"{Configuration.Instance.ShouldWarnCriminalMessage}");
+            }
         }
 
         private void VehicleManager_onDamageVehicleRequested(CSteamID instigatorSteamID, InteractableVehicle vehicle, ref ushort pendingTotalDamage, ref bool canRepair, ref bool shouldAllow, EDamageOrigin damageOrigin)
@@ -33,6 +48,10 @@ namespace AntiVehiclePro
                     {
                         if (sameplayer.IsAdmin != true)
                         {
+                            if (Configuration.Instance.ShouldWarnCriminal)
+                            {
+                                UnturnedChat.Say(sameplayer, $"{Configuration.Instance.ShouldWarnCriminalMessage}");
+                            }
                             if (Configuration.Instance.ShouldAllowDamage == false)
                             {
                                 shouldAllow = false;
