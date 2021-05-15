@@ -16,7 +16,6 @@ Please make sure to create a new "Vehicle" when adding a new blacklisted ID. An 
     </Vehicle>
   </Blacklisted>
 ```
-
 ## Adding a VehicleBan to a player
 
 Please make sure to create a new "Vehicleban" when adding a new player as shown below.

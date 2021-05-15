@@ -23,6 +23,7 @@ namespace AntiVehiclePro
             VehicleManager.onVehicleLockpicked += VehicleManager_onVehicleLockpicked;
         }
 
+//Lockpick prevention
         private void VehicleManager_onVehicleLockpicked(InteractableVehicle vehicle, Player instigatingPlayer, ref bool allow)
         {
             UnturnedPlayer sameplayer = UnturnedPlayer.FromPlayer(instigatingPlayer);
@@ -37,6 +38,7 @@ namespace AntiVehiclePro
             }
         }
 
+//Damage prevention
         private void VehicleManager_onDamageVehicleRequested(CSteamID instigatorSteamID, InteractableVehicle vehicle, ref ushort pendingTotalDamage, ref bool canRepair, ref bool shouldAllow, EDamageOrigin damageOrigin)
         {
             if (instigatorSteamID != CSteamID.Nil)
@@ -62,6 +64,7 @@ namespace AntiVehiclePro
             }
         }
 
+//VehicleBan and VehicleBlacklist
         private void VehicleManager_onEnterVehicleRequested(Player player, InteractableVehicle vehicle, ref bool shouldAllow)
         {
             UnturnedPlayer unturnedPlayer = UnturnedPlayer.FromPlayer(player);
@@ -82,6 +85,7 @@ namespace AntiVehiclePro
             }
         }
 
+//Tire prevention
         private void VehicleManager_onDamageTireRequested(CSteamID instigatorSteamID, InteractableVehicle vehicle, int tireIndex, ref bool shouldAllow, EDamageOrigin damageOrigin)
         {
             if (Configuration.Instance.ShouldAllowTirePop == false)
